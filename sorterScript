@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Prompt user to enter the directory path
+echo "Enter the directory path:"
+read directory
+
+# Create subdirectories for each file type
+mkdir -p "$directory"/images
+mkdir -p "$directory"/documents
+mkdir -p "$directory"/music
+mkdir -p "$directory"/videos
+mkdir -p "$directory"/archives
+mkdir -p "$directory"/others
+
+# Move files to their respective subdirectories based on their file type
+find "$directory" -maxdepth 1 -type f -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.bmp" | xargs -I {} mv {} "$directory"/images/
+find "$directory" -maxdepth 1 -type f -iname "*.doc" -o -iname "*.docx" -o -iname "*.ppt" -o -iname "*.pptx" -o -iname "*.xls" -o -iname "*.xlsx" -o -iname "*.pdf" | xargs -I {} mv {} "$directory"/documents/
+find "$directory" -maxdepth 1 -type f -iname "*.mp3" -o -iname "*.wav" -o -iname "*.flac" -o -iname "*.ogg" | xargs -I {} mv {} "$directory"/music/
+find "$directory" -maxdepth 1 -type f -iname "*.mp4" -o -iname "*.avi" -o -iname "*.mkv" -o -iname "*.wmv" | xargs -I {} mv {} "$directory"/videos/
+find "$directory" -maxdepth 1 -type f -iname "*.zip" -o -iname "*.tar" -o -iname "*.gz" -o -iname "*.rar" | xargs -I {} mv {} "$directory"/archives/
+find "$directory" -maxdepth 1 -type f -not -iname "*.jpg" -not -iname "*.jpeg" -not -iname "*.png" -not -iname "*.gif" -not -iname "*.bmp" -not -iname "*.doc" -not -iname "*.docx" -not -iname "*.ppt" -not -iname "*.pptx" -not -iname "*.xls" -not -iname "*.xlsx" -not -iname "*.pdf" -not -iname "*.mp3" -not -iname "*.wav" -not -iname "*.flac" -not -iname "*.ogg" -not -iname "*.mp4" -not -iname "*.avi" -not -iname "*.mkv" -not -iname "*.wmv" -not -iname "*.zip" -not -iname "*.tar" -not -iname "*.gz" -not -iname "*.rar" | xargs -I {} mv {} "$directory"/others/
+
+echo "Done!"
