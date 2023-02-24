@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Check that the script is being run as root
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root"
+   exit 1
+fi
+
+# Prompt the user for the device to write the ISO to
+read -p "Enter the device to write the ISO to (e.g. /dev/sdb): " device
+
+# Prompt the user for the path to the ISO file
+read -p "Enter the path to the ISO file: " isopath
+
+# Use dd to write the ISO to the device
+dd if=$isopath of=$device bs=4M status=progress oflag=sync
+
+# Sync the device to ensure that all data is written
+sync
+
+echo "ISO flashed to $device successfully"
